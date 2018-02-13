@@ -45,12 +45,13 @@ func parseCsv(fileName string) PageData {
 
   file, err := os.Open(fileName)
   if err != nil {
-    log.Fatal(err)
+    log.Printf("%+v", err)
+    return PageData{}
   }
 
   stat, err := os.Stat(fileName)
   if err != nil {
-    log.Fatal(err)
+    log.Printf("%+v", err)
   }
 
   defer file.Close()
