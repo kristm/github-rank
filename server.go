@@ -40,24 +40,15 @@ type PageData struct {
   ActiveUsers []Profile
 }
 
-func index(w http.ResponseWriter, r *http.Request) {
-  var countryCode string
-
-  if r.RequestURI == "/" {
-    countryCode = "default"
-  } else {
-    countryCode = pat.Param(r, "country")
-  }
-
+func parseCsv(fileName string) PageData {
   users := []Profile{}
 
-  data := fmt.Sprintf("data/most-active-github-users-%s.csv", countryCode)
-  file, err := os.Open(data)
+  file, err := os.Open(fileName)
   if err != nil {
     log.Fatal(err)
   }
 
-  stat, err := os.Stat(data)
+  stat, err := os.Stat(fileName)
   if err != nil {
     log.Fatal(err)
   }
@@ -74,7 +65,21 @@ func index(w http.ResponseWriter, r *http.Request) {
     }
   }
 
-  content := PageData{ActiveUsers: users, ModifiedDate: stat.ModTime().Format("Jan 2, 2006 15:04:00 GMT")}
+  return PageData{ActiveUsers: users, ModifiedDate: stat.ModTime().Format("Jan 2, 2006 15:04:00 GMT")}
+}
+
+func index(w http.ResponseWriter, r *http.Request) {
+  content := parseCsv("data/most-active-github-users-default.csv")
+  log.Printf("file date: %s", content.ModifiedDate)
+
+  t, _ := template.ParseFiles("views/index.html")
+  t.Execute(w, content)
+}
+
+func countryIndex(w http.ResponseWriter, r *http.Request) {
+  countryCode := pat.Param(r, "country")
+  fileName := fmt.Sprintf("data/most-active-github-users-%s.csv", countryCode)
+  content := parseCsv(fileName)
   log.Printf("file date: %s", content.ModifiedDate)
 
   t, _ := template.ParseFiles("views/index.html")
@@ -83,8 +88,8 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 func main() {
   mux := goji.NewMux()
-  mux.HandleFunc(pat.Get("/:country"), index)
-  mux.HandleFunc(pat.Get("/*"), index)
+  mux.HandleFunc(pat.Get("/"), index)
+  mux.HandleFunc(pat.Get("/:country"), countryIndex)
 
   fs := http.FileServer(http.Dir("public"))
   mux.Handle(pat.Get("/assets/*"), http.StripPrefix("/assets/", fs))

@@ -10,7 +10,8 @@
   a { color: steelblue; text-decoration: none; }
   img { width: 3rem; float: left; border-radius: 2rem }
   header { display: flex; justify-content: space-between; align-content: center;  background: black; color: white; padding: 0.2rem 0.5rem }
-  header time { font-size: 0.9rem; align-self: center }
+  header a { font-size: 0.9rem; font-weight: 300; color: white; text-decoration: underline }
+  header time { font-size: 0.9rem; align-self: center; text-align: right }
   #container { max-width: 95% }
   .score { display: block; float: right; width: 4rem; height: 4rem; background: black; color: yellow; border-radius: 2rem; text-align: center; font-family: 'Montserrat', Futura; line-height: 4rem; margin-bottom: 2rem; }
   .info { float: left; clear: left; padding: 2rem 0; }
@@ -24,7 +25,14 @@
 </style>
 <body>
   <header>
-    <span class="title">GitHub Rank</span>
+    <span class="title">
+      GitHub Rank:
+      <a href="/">All</a>
+      <a href="/uk">UK</a>
+      <a href="/jp">JP</a>
+      <a href="/ph">PH</a>
+      <a href="/mx">MX</a>
+    </span>
     <time>Last Updated {{print .ModifiedDate}}</time>
   </header>
   <div id="container">
