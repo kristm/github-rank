@@ -41,7 +41,7 @@
       {{range $i, $person := .ActiveUsers}}
         <li>
           <span class="score">{{$person.Score}}</span>
-          <img src="{{$person.AvatarUrl}}" />
+          <img src="{{$person.AvatarUrl}}&size=150" />
           <section class="info">
             <a href="{{$person.Url}}" class="username">{{$person.UserName}}</a><br/>
             {{$person.Name}} {{ if $person.Email }} <span class="email">{{$person.Email}}</span> {{ end }}<br/>
