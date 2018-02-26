@@ -27,11 +27,15 @@
   {
     html { font-size: 22px }
     body { -webkit-overflow-scrolling: touch }
-    small { font-size: 20px }
+    header, header a, header time { font-size: 2.2rem; font-weight: 400 }
+    header { flex-direction: column; position: -webkit-sticky }
+    header .title, header time { align-self: center; margin: 1rem 0 0.5rem }
+    small { font-size: 24px }
     img { width: 5rem; border-radius: 3rem }
-    .info { padding: 1em 0 }
-    .score { margin-bottom: 0; font-size: 1.2rem }
-    .languages dl dd { border-radius: 1rem; padding: 0 1rem; border-radius: 1rem; margin: 0.5rem; font-size: 1em }
+    .username { font-size: 2rem }
+    .info { padding: 1em 0; font-size: 2rem }
+    .score { margin-bottom: 0; font-size: 2rem; width: 7rem; height: 7rem; border-radius: 3.5rem; line-height: 7rem }
+    .languages dl dd { border-radius: 1rem; padding: 0.5rem 1.2rem; border-radius: 1.2rem; margin: 0.5rem; font-size: 1.8rem }
   }
 </style>
 <body>
